@@ -15,5 +15,9 @@ These rows include the ones that pertain to the USA or Spain, and the columns we
 
 ```{r}
 water = read_csv("./cleaned_global_water_consumption.csv")
-water %>% select(c('Country', 'Year', 'Agricultural Water Use (%)', 'Industrial Water Use (%)', 'Household Water Use (%)')) %>% filter(Country == "Spain" | Country == "USA")
+cleaned_data = water %>% select(c('Country', 'Year', 'Agricultural Water Use (%)', 'Industrial Water Use (%)', 'Household Water Use (%)')) %>% filter(Country == "Spain" | Country == "USA")
+
+cleaned_data
+
+write.csv(cleaned_data,"./cleaned_water_consumption_data.csv", row.names = FALSE)
 ```
