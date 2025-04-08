@@ -1,0 +1,15 @@
+---
+title: "clean_data"
+output: html_document
+date: "2025-04-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+water = read_csv("./cleaned_global_water_consumption.csv")
+water %>% select(c('Country', 'Year', 'Agricultural Water Use (%)', 'Industrial Water Use (%)', 'Household Water Use (%)')) %>% filter(Country == "Spain" | Country == "USA")
+```
