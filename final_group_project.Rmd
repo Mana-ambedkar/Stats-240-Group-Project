@@ -1,0 +1,45 @@
+---
+title: "final_group_project"
+output: html_document
+date: "2025-03-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+> By Ben Schweitzer, Elizabeth Huevler, Manasi Ambedkar, and Sanchith Devarajan
+
+## Communication
+We will be communicating outside of class on instagram in a group chat that we made with each other.
+We will work together in discussion and meet up outside of class on our own time if needed.
+
+## Question
+> Is there a difference in proportion of how water is distributed to agriculture, industry, and households between the USA and Spain?
+
+## Dataset
+https://www.kaggle.com/datasets/atharvasoundankar/global-water-consumption-dataset-2000-2024
+
+"This dataset has been synthetically generated based on real-world patterns observed in global water consumption reports, climate data, and sector-wise usage statistics. While it is not sourced from a specific government database, it aims to reflect realistic water consumption trends derived from historical trends, scientific studies, and predictive modeling." (Source: Kaggle.com)
+
+```{r}
+water = read_csv("./cleaned_global_water_consumption.csv")
+water
+```
+The key variables we will be using here are the percentages of water for industrial, agricultural, and household use for rows associated with the USA and Spain. These columns are measuring the percentage of
+total water consumption in that country and year that was used for either industrial, agricultural, or household purposes. These percentages tell us how the water is distributed among the three categories for both Span and the USA over the years. The data we will be using is not a sample, we will be using all rows that reference the USA or Spain.
+
+## Graph
+We will create a stacked bar plot that includes a bar for each country that is divided into groups based on the three categories of water consumption. We will have country on the x axis and average percentage of water consumed (grouped by category) on the y axis.
+
+## Inference Method
+Our inference method is difference of two population proportions. We will use this inference method for each of the three categories of water consumption. 
+
+
+
+
+
+
+
+
