@@ -9,6 +9,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+> This code filters our original dataset for only the rows and columns that we need for our project
+
+These rows include the ones that pertain to the USA or Spain, and the columns we will be using are country, year, Agricultural Water Use, Industrial Water Use, and Household Water Use.
+
 ```{r}
 water = read_csv("./cleaned_global_water_consumption.csv")
 water %>% select(c('Country', 'Year', 'Agricultural Water Use (%)', 'Industrial Water Use (%)', 'Household Water Use (%)')) %>% filter(Country == "Spain" | Country == "USA")
