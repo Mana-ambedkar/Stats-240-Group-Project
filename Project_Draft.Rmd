@@ -1,0 +1,46 @@
+---
+title: "Project_Draft"
+output: html_document
+date: "2025-04-08"
+---
+# Group Members
+- Elizabeth Huevler
+- Ben Schweitzer
+- Manasi Ambedkar
+- Sanchith Devarajan
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+> The opening sentence(s) should draw the reader into your report by providing high-level background and motivation for why the reader should care about this topic/report. 
+Clearly state the question(s) of interest written in the right statistical sense.
+Conclude the introduction with a thesis statement. 
+The thesis statement should clearly state the main finding of the report or the conclusion of your analysis; you'll have to actually conduct the analysis, then write the thesis, because the thesis is about what your analysis actually found. For example, "We find strong evidence that the average age of smokers is higher than the average age of non-smokers among Wisconsin adults." The rest of the report will explain exactly how you arrived at this conclusion. DO NOT use statistical terms here like confidence interval or hypothesis test or p-value, etc.
+
+# Background
+
+> Similarly to your project proposal, cite the source(s) of your data, describe how it was collected, what the variables mean, and what a single row of the data represents in real life terms. No need to describe variables you do not use.
+Describe any background information needed to better comprehend the question or questions you are posing and how the data relate to the question. (E.g. if your question is about curling medals at the Olympics versus GDP, it might help to give a one-sentence explanation on what curling is, which event(s) you are analyzing, and what GDP is.)
+If present, describe any unusual factors in the data (e.g. the Olympics did not hold curling competitions in these years) that might affect your visualization or analysis.
+Include AT LEAST ONE relevant graph towards answering your question of interest and explain how it supports your conclusion. You may also choose to report numerical summaries, such as sample means or proportions or correlation coefficients, if you think that it aids your central story.
+
+> Include Data Sources, Variables, the Data Structure, and the Data Cleaning and Processing
+
+# Statistical Analysis
+
+> This section should include all of your technical/statistical vocabulary; including a definition of your parameter(s) of interest, declaration of what type of inference you are using, checking of assumptions, stating of hypotheses, and reporting of at least one confidence interval OR p-value. Nowhere else in your report should these show up. 
+If any assumptions are not met, that is okay; you can continue to run that analysis, just make sure you explain why it is not met, and acknowledge the assumption is not met in the discussions.
+This section should not include substantial interpretation of results. Leave that for the discussion.
+
+> Include parameter of intrest, type of infrence, assumptions, hypotheses, test statistic and null distribution, results, interpretation, confidence interval
+
+# Discussion
+
+> Interpret your confidence interval(s)/p-value(s) in the context of the question of interest - explained for a non-statistical reader.
+Discuss any shortcomings of the analysis - e.g. data you wish you had, assumptions that are not met, et cetera.
+Discuss any additional questions that came up during your analysis, or make recommendations for future research.
+
+> Further interpretation, shortcomings of the analysis, additional questions, and reccomendations for future research
