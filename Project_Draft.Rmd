@@ -135,9 +135,9 @@ ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
 
 ## Assumptions
 
--   independence:
--   normality:
--   constant variance:
+-   independence: we can assume that the two groups (USA and Spain) are independent of each other. The data was recorded for each country separately, so this is a fair assumption.
+-   normality: it is assumed that the sample proportions for each group are approximately normally distributed.
+-   constant variance: as a part of being normally distributed, we can assume that the variance of the sample proportions are approximately constant
 
 ## Hypothesis
 
