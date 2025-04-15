@@ -2,45 +2,246 @@
 title: "Project_Draft"
 output: html_document
 date: "2025-04-08"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
+
 # Group Members
-- Elizabeth Huevler
-- Ben Schweitzer
-- Manasi Ambedkar
-- Sanchith Devarajan
+
+-   Elizabeth Huevler
+-   Ben Schweitzer
+-   Manasi Ambedkar
+-   Sanchith Devarajan
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
 ```
 
 # Introduction
 
-> The opening sentence(s) should draw the reader into your report by providing high-level background and motivation for why the reader should care about this topic/report. 
-Clearly state the question(s) of interest written in the right statistical sense.
-Conclude the introduction with a thesis statement. 
-The thesis statement should clearly state the main finding of the report or the conclusion of your analysis; you'll have to actually conduct the analysis, then write the thesis, because the thesis is about what your analysis actually found. For example, "We find strong evidence that the average age of smokers is higher than the average age of non-smokers among Wisconsin adults." The rest of the report will explain exactly how you arrived at this conclusion. DO NOT use statistical terms here like confidence interval or hypothesis test or p-value, etc.
+> Water is a fundamental resource that supports life, food production,
+> and industrial development. However, the way in which water is
+> distributed across those sectors can vary significantly between
+> countries due to differences in economic structure, climate, and
+> national priorities
+
+> In this project, we will explore the question: "**Are there
+> differences in the average proportions of total water allocated to
+> agriculture, industry, and households between the USA and Spain over
+> the years 2000-2024?**"
+
+> Our analysis reveals distinct patterns in water allocation, suggesting
+> that the **USA dedicates a larger proportion of its water resources to
+> agriculture, while Spain allocates relatively more to [INDUSTRY or
+> HOUSEHOLDS, based on our data]**.
 
 # Background
 
-> Similarly to your project proposal, cite the source(s) of your data, describe how it was collected, what the variables mean, and what a single row of the data represents in real life terms. No need to describe variables you do not use.
-Describe any background information needed to better comprehend the question or questions you are posing and how the data relate to the question. (E.g. if your question is about curling medals at the Olympics versus GDP, it might help to give a one-sentence explanation on what curling is, which event(s) you are analyzing, and what GDP is.)
-If present, describe any unusual factors in the data (e.g. the Olympics did not hold curling competitions in these years) that might affect your visualization or analysis.
-Include AT LEAST ONE relevant graph towards answering your question of interest and explain how it supports your conclusion. You may also choose to report numerical summaries, such as sample means or proportions or correlation coefficients, if you think that it aids your central story.
+## Data Source
 
-> Include Data Sources, Variables, the Data Structure, and the Data Cleaning and Processing
+> Raw data: The dataset used in this analysis is from Kaggle, tited
+> *"Global Water Consumption Dataset (2000-2024)"*. While the dataset is
+> synthetic, it was generated based on real-world patterns observed in
+> historical water use reports, climate data, and global sector usage
+> models. It reflects realistic trends in national water consumption.
+
+> For the purposes of this project, we have specifically focused on the
+> water usage data for the USA and Spain between the years 2000 and
+> 2024. For each country, the dataset provides the percentage of its
+> total freshwater usage distributed across three main sectors:
+> agricultural, industrial, and household for each year.
+
+## Variables:
+
+-   Country: Country name (filtered to either USA or Spain)
+-   Year: Number between 2000 - 2024 indictating the year of the data
+-   Agricultural Use: Proportion of total water used in the agricultural
+    sector
+-   Industrial Use: Proportion of total water used in the industry
+    sector
+-   Household Use: Proportion of total water used in the household
+    sector
+
+## Data Structure
+
+> Each row in the dataset corresponds to a specific country (USA or
+> Spain) and year, showing the distribution of its total freshwater
+> usage as percentages across the agricultural, industrial, and
+> household sectors for that year.
+
+> Our sample includes data for the USA and Spain over the 25-year period
+> (2000-2024), resulting in 25 rows for each country. To compare the
+> overall water allocation of the two countries, we will calculate the
+> average percentage of water used in each sector across these years for
+> both the USA and Spain.
+
+## Data Cleaning and Processing:
+
+> The initial dataset was filtered to retain only the data for Spain and
+> the USA for all available years. No imputation was necessary as the
+> data for these two countries appeared complete for the relevant years
+> and sectors. The processing involved calculating the average
+> percentage of water used in the agricultural, industrial, and
+> household sectors for each country across the years 2000-2024.
+
+```{r}
+water = read_csv("~/Desktop/STAT240/data/cleaned_water_consumption_data.csv")
+
+# Calculate average water use by sector for each country
+average_use <- water %>%
+  group_by(Country) %>%
+  summarise(
+    Agricultural = mean(`Agricultural Water Use (%)`, na.rm = TRUE),
+    Industrial = mean(`Industrial Water Use (%)`, na.rm = TRUE),
+    Household = mean(`Household Water Use (%)`, na.rm = TRUE)
+  ) %>%
+  # Turn wide data into long format
+  pivot_longer(cols = c(Agricultural, Industrial, Household),
+               names_to = "Sector",
+               values_to = "Average_Percentage")
+print(average_use)
+
+
+ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Water Use by Sector (2000-2024): USA vs. Spain",
+       x = "Water Use Sector",
+       y = "Average Percentage of Total Water Use")
+```
+
+> The table and bar chart above show the average percentage of total water used in the agricultural, industrial, and household sectors for the USA and Spain across the years 2000-2024. This provides a summary view of the typical water allocation in each country over this period.
 
 # Statistical Analysis
 
-> This section should include all of your technical/statistical vocabulary; including a definition of your parameter(s) of interest, declaration of what type of inference you are using, checking of assumptions, stating of hypotheses, and reporting of at least one confidence interval OR p-value. Nowhere else in your report should these show up. 
-If any assumptions are not met, that is okay; you can continue to run that analysis, just make sure you explain why it is not met, and acknowledge the assumption is not met in the discussions.
-This section should not include substantial interpretation of results. Leave that for the discussion.
+## Parameter of Intrest
 
-> Include parameter of intrest, type of infrence, assumptions, hypotheses, test statistic and null distribution, results, interpretation, confidence interval
+> Our parameters of interest are the true differences in the average proportions of total water use allocated to each sector between the USA and Spain over the period 2000-2024. Let:
+
+-   The difference in the average proportion of water used for
+    agriculture: $\mu_{A,USA} - \mu_{A,Spain}$
+-   The difference in the average proportion of water used for industry:
+    $\mu_{I,USA} - \mu_{I,Spain}$
+-   The difference in the average proportion of water used for household
+    use: $\mu_{H,USA} - \mu_{H,Spain}$
+
+> Where $\mu$ represents the true average proportion of water used for the specified sector and country over a 25 year period.
+
+## Type of Inference
+
+> We use a difference in two means as our method of inference. This is appropriate for comparing the means of yearly percentages between the two countries for each sector.
+
+## Assumptions
+
+-   independence:
+-   normality:
+-   constant variance:
+
+## Hypothesis
+
+> For each category (agriculture, industry, household), we conduct two-sided hypothesis tests:
+
+-   Agriculture:
+
+-   $H_0: \mu_{A,USA} = \mu_{A,Spain}$ : The average proportion of water
+    used for agriculture is the same in the USA and Spain.
+
+-   $H_A: \mu_{A,USA} \neq \mu_{A,Spain}$ : The average proportion of
+    water used for agriculture is different in the USA and Spain.
+
+-   Industry:
+
+-   $H_0: \mu_{I,USA} = \mu_{I,Spain}$ : The average proportion of water
+    used for industry is the same in the USA and Spain.
+
+-   $H_A: \mu_{I,USA} \neq \mu_{I,Spain}$ : The average proportion of
+    water used for industry is different in the USA and Spain.
+
+-   Household:
+
+-   $H_0: \mu_{H,USA} = \mu_{H,Spain}$ : The average proportion of water
+    used for household use is the same in the USA and Spain.
+
+-   $H_A: \mu_{H,USA} \neq \mu_{H,Spain}$ : The average proportion of
+    water used for household use is different in the USA and Spain.
+
+## Test Statistic and Null Distribution
+
+> The test statistic is calculated as: *TEST STAT FORMULA* where:
+> \_explain the meaning of the variables used in our project context The
+> degrees of freedom:
+
+```{r}
+t_test_agri <- t.test(`Agricultural Water Use (%)` ~ Country, data = water, var.equal = TRUE)
+t_test_ind <- t.test(`Industrial Water Use (%)` ~ Country, data = water, var.equal = TRUE)
+t_test_house <- t.test(`Household Water Use (%)` ~ Country, data = water, var.equal = TRUE)
+
+print(t_test_agri)
+print(t_test_ind)
+print(t_test_house)
+```
+
+## Results
+
+> Agricultural Water Use:
+
+-   Test Statistic: -0.368
+-   Degrees of Freedom: 48
+-   P-value: 0.714
+
+> Industrial Water Use:
+
+-   Test Statistic: 0.362
+-   Degrees of Freedom: 48
+-   P-value: 0.719
+
+> Household Water Use:
+
+-   Test Statistic: 0.199
+-   Degrees of Freedom: 48
+-   P-value: 0.843
+
+## Interpretation: Compare p-value with alpha (alpha = 0.05)
+
+> For each sector, we compared the p-value to our chosen significance level (alpha = 0.05). If the p-value is less than 0.05, we would reject the null hypothesis and conclude that there is a statistically significant difference in the average proportion of water used in that sector between the USA and Spain during the period 2000-2024.
+
+> In our analysis:
+
+-   For agricultural water use, the p-value is 0.714, which is greater
+    than 0.05.
+-   For industrial water use, the p-value is 0.719, which is greater
+    than 0.05.
+-   For household water use, the p-value is 0.843, which is greater than
+    0.05.
+
+> Therefore, for all three sectors, we fail to reject the null hypothesis. This suggests that based on our data and analysis, there is no statistically significant difference in the average proportion of water allocated to agriculture, industry, or households between the USA and Spain during the period 2000-2024.
+
+## Confidence Interval
+
+> The 95% confidence intervals for the difference in mean proportions
+> (Spain - USA) are:
+
+> -   **Agricultural Water Use:** -3.26 to 2.25
+> -   **Industrial Water Use:** -1.93 to 2.77
+> -   **Household Water Use:** -1.58 to 1.92
+
+> Since all three confidence intervals include zero, this further
+> supports our conclusion that there is no statistically significant
+> difference in the average water allocation to these sectors between
+> the USA and Spain during the studied period. If a confidence interval
+> contains zero, it means that a difference of zero is a plausible value
+> for the true difference in population means.
 
 # Discussion
 
-> Interpret your confidence interval(s)/p-value(s) in the context of the question of interest - explained for a non-statistical reader.
-Discuss any shortcomings of the analysis - e.g. data you wish you had, assumptions that are not met, et cetera.
-Discuss any additional questions that came up during your analysis, or make recommendations for future research.
+> Interpret your confidence interval(s)/p-value(s) in the context of the
+> question of interest - explained for a non-statistical reader. Discuss
+> any shortcomings of the analysis - e.g. data you wish you had,
+> assumptions that are not met, et cetera. Discuss any additional
+> questions that came up during your analysis, or make recommendations
+> for future research.
 
-> Further interpretation, shortcomings of the analysis, additional questions, and reccomendations for future research
+> Further interpretation, shortcomings of the analysis, additional
+> questions, and reccomendations for future research
