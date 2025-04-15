@@ -15,7 +15,7 @@ editor_options:
 -   Sanchith Devarajan
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
 ```
@@ -236,12 +236,22 @@ print(t_test_house)
 
 # Discussion
 
-> Interpret your confidence interval(s)/p-value(s) in the context of the
-> question of interest - explained for a non-statistical reader. Discuss
-> any shortcomings of the analysis - e.g. data you wish you had,
-> assumptions that are not met, et cetera. Discuss any additional
-> questions that came up during your analysis, or make recommendations
-> for future research.
+> The p-values of our tests: 0.714, 0.719, and 0.843, respectively, are each much greater than our alpha value of 0.05. This indicates that we fail to reject the null hypotheses that the proportions of water allocated to aggriculture, household, and industrial use between the USA and Spain are the same. We can conclude from this that there is strong evidence that there is no significant difference in the allocation of water usage amongst these three categories between the USA and Spain.
 
-> Further interpretation, shortcomings of the analysis, additional
-> questions, and reccomendations for future research
+> For non-statiscal readers, the p-value is the probability of observing the findings in our data given that there is no difference between water allocation in the USA and Spain. Because of this, we have strong evidence that there is in fact no strong difference between the allocations in the two countries.
+
+> The confidence intervals for the differences in mean proportions tell us that we are 95% confident that the difference in mean agricultural use is between -3.26 and 2.25, difference in mean industrial use is between -1.93 and 2.77, and difference between mean household use is between -1.58 and 1.92. Since all of these intervals contain 0, there is strong evidence that there is no significant difference in the allocations of water use between the two countries.
+
+> For non-statistical readers, a confidence interval is a way of estimating a value that is a range we believe the true value lies within. The confidence level is how confident we are that the value is inside of this range. In our instance, we are 95% sure that the real difference in allocations is within the ranges mentioned above. Since all of these ranges include 0, it is reasonable to think the real value is or is close to 0.
+
+## Shortcomings
+
+> For starters, the data we used in this experiment was synthetic, meaning it was built based on patterns instead of exact, measured and observed values. While there is reason to believe this data is mostly accurate, it may not be as accurate as a dataset that is made up of observed values.
+
+> The analysis is only limited to 25 years. Perhaps if we had a longer span of time to analyze, we would get differing or more insightful results.
+
+## Going Forward
+
+> We believe if we were able to find a more in-depth dataset that addresed these shortcomings, we might be able to make more precise predictions about the allocations of water among these two countries
+
+> For future research, we would recommend potentially working with different or more countries in order to see if there are notable differences in water allocation between different pairs of countries. Perhaps countries with much different climates, social norms, or health conditions would allocate their water significantly differently from each other.
