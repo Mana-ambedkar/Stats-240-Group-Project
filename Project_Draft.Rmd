@@ -33,10 +33,10 @@ library(tidyverse)
 > agriculture, industry, and households between the USA and Spain over
 > the years 2000-2024?**"
 
-> Our analysis reveals distinct patterns in water allocation, suggesting
-> that the **USA dedicates a larger proportion of its water resources to
-> agriculture, while Spain allocates relatively more to [INDUSTRY or
-> HOUSEHOLDS, based on our data]**.
+> Our analysis reveals that there is no statistical difference in the mean 
+proportions of water allocated to the three categories of aggricultural, 
+industrial, and household use between the USA and Spain between the years 
+of 2000 and 2024.
 
 # Background
 
