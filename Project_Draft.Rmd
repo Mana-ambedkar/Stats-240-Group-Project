@@ -18,6 +18,7 @@ editor_options:
 knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
+water = read_csv("~/Desktop/STAT240/data/cleaned_water_consumption_data.csv")
 ```
 
 # Introduction
@@ -87,8 +88,7 @@ of 2000 and 2024.
 > percentage of water used in the agricultural, industrial, and
 > household sectors for each country across the years 2000-2024.
 
-```{r}
-water = read_csv("~/Desktop/STAT240/data/cleaned_water_consumption_data.csv")
+```{r echo=FALSE}
 
 # Calculate average water use by sector for each country
 average_use <- water %>%
@@ -169,18 +169,30 @@ ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
 
 ## Test Statistic and Null Distribution
 
-> The test statistic is calculated as: *TEST STAT FORMULA* where:
-> \_explain the meaning of the variables used in our project context The
-> degrees of freedom:
+> The test statistic is calculated as: 
 
-```{r}
+$$ t = \frac{\bar{x} - \bar{y}}{\sqrt{\frac{s_x^2}{n_x} + \frac{s_y^2}{n_y}}}$$
+
+> where:
+
+- $\bar{x}, \bar{y}$: Sample means for USA and Spain.
+
+- $s_x^2, s_y^2$: Sample variances for USA and Spain.
+
+- $n_x, n_y$: Sample sizes for USA and Spain.
+
+- The degrees of freedom: 48 (25 years + 25 years - 2)
+
+> We repeat this process 3 times for the three different sectors we are testing
+
+```{r echo=FALSE}
 t_test_agri <- t.test(`Agricultural Water Use (%)` ~ Country, data = water, var.equal = TRUE)
 t_test_ind <- t.test(`Industrial Water Use (%)` ~ Country, data = water, var.equal = TRUE)
 t_test_house <- t.test(`Household Water Use (%)` ~ Country, data = water, var.equal = TRUE)
 
-print(t_test_agri)
-print(t_test_ind)
-print(t_test_house)
+#print(t_test_agri)
+#print(t_test_ind)
+#print(t_test_house)
 ```
 
 ## Results
