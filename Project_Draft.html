@@ -380,10 +380,10 @@ agriculture, industry, and households between the USA and Spain over the
 years 2000-2024?</strong>”</p>
 </blockquote>
 <blockquote>
-<p>Our analysis reveals that there is no statistical difference in the
-mean proportions of water allocated to the three categories of
-aggricultural, industrial, and household use between the USA and Spain
-between the years of 2000 and 2024.</p>
+<p>The analysis suggests no statistical difference in the average
+proportions of water allocated to the three categories of aggricultural,
+industrial, and household use between the USA and Spain between the
+years of 2000 and 2024.</p>
 </blockquote>
 </div>
 <div id="background" class="section level1">
@@ -440,11 +440,11 @@ both the USA and Spain.</p>
 <h2>Data Cleaning and Processing:</h2>
 <blockquote>
 <p>The initial dataset was filtered to retain only the data for Spain
-and the USA for all available years. No imputation was necessary as the
-data for these two countries appeared complete for the relevant years
-and sectors. The processing involved calculating the average percentage
-of water used in the agricultural, industrial, and household sectors for
-each country across the years 2000-2024.</p>
+and the USA for all available years. The dataset was complete for the
+relevent countries and years, so no imputation was necessary. The
+processing involved calculating the average percentage of water used in
+the agricultural, industrial, and household sectors for each country
+across the years 2000-2024.</p>
 </blockquote>
 <pre><code>## # A tibble: 6 × 3
 ##   Country Sector       Average_Percentage
@@ -460,8 +460,10 @@ each country across the years 2000-2024.</p>
 <p>The table and bar chart above show the average percentage of total
 water used in the agricultural, industrial, and household sectors for
 the USA and Spain across the years 2000-2024. This provides a summary
-view of the typical water allocation in each country over this
-period.</p>
+view of the typical water allocation in each country over this period.
+Thus bar chart visually supports our thesis by showing that the average
+proportion of water usage across sectors is similar between the USA and
+Spain.</p>
 </blockquote>
 </div>
 </div>
@@ -505,7 +507,8 @@ two countries for each sector.</p>
 independent of each other. The data was recorded for each country
 separately, so this is a fair assumption.</li>
 <li>normality: it is assumed that the sample proportions for each group
-are approximately normally distributed.</li>
+are approximately normally distributed based on the Central Limit
+Theorem.</li>
 <li>constant variance: as a part of being normally distributed, we can
 assume that the variance of the sample proportions are approximately
 constant</li>
@@ -652,8 +655,10 @@ fail to reject the null hypotheses that the proportions of water
 allocated to aggriculture, household, and industrial use between the USA
 and Spain are the same. We can conclude from this that there is strong
 evidence that there is no significant difference in the allocation of
-water usage amongst these three categories between the USA and
-Spain.</p>
+water usage amongst these three categories between the USA and Spain.
+This means that the differences in water usage across sectors between
+the USA and Spain are so small that they could easily be due to random
+chance.</p>
 </blockquote>
 <blockquote>
 <p>For non-statiscal readers, the p-value is the probability of
