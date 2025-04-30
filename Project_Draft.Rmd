@@ -43,7 +43,7 @@ of 2000 and 2024.
 
 ## Data Source
 
-> Raw data: The dataset used in this analysis is from Kaggle, tited
+> Raw data: The dataset used in this analysis is from Kaggle, titled
 > *"Global Water Consumption Dataset (2000-2024)"*. While the dataset is
 > synthetic, it was generated based on real-world patterns observed in
 > historical water use reports, climate data, and global sector usage
@@ -76,7 +76,7 @@ of 2000 and 2024.
 > household sectors for that year.
 
 > Our sample includes data for the USA and Spain over the 25-year period
-> (2000-2024), resulting in 25 rows for each country. To compare the
+> (2000-2024), resulting in 25 rows for each country (50 rows in total). To compare the
 > overall water allocation of the two countries, we will calculate the
 > average percentage of water used in each sector across these years for
 > both the USA and Spain.
@@ -84,12 +84,11 @@ of 2000 and 2024.
 ## Data Cleaning and Processing:
 
 > The initial dataset was filtered to retain only the data for Spain and
-> the USA for all available years. The dataset was complete for the relevent countries and years, so no imputation was necessary. The processing involved calculating the average
+> the USA for all available years. The dataset was complete for the relevant countries and years, so no imputation was necessary. The processing involved calculating the average
 > percentage of water used in the agricultural, industrial, and
 > household sectors for each country across the years 2000-2024.
 
 ```{r echo=FALSE}
-
 # Calculate average water use by sector for each country
 average_use <- water %>%
   group_by(Country) %>%
@@ -102,7 +101,17 @@ average_use <- water %>%
   pivot_longer(cols = c(Agricultural, Industrial, Household),
                names_to = "Sector",
                values_to = "Average_Percentage")
-print(average_use)
+
+
+
+ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
+  geom_point(size = 4, shape = 21) +
+  geom_text(aes(label = round(Average_Percentage, 1)), vjust = -0.5) +
+  facet_wrap(~Country) +
+  labs(title = "Average Water Use by Sector (2000-2024): USA vs. Spain",
+       x = "Water Use Sector",
+       y = "Average Percentage of Total Water Use") +
+  scale_y_continuous(limits = c(0, 55))
 
 
 ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
@@ -112,7 +121,7 @@ ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
        y = "Average Percentage of Total Water Use")
 ```
 
-> The table and bar chart above show the average percentage of total water used in the agricultural, industrial, and household sectors for the USA and Spain across the years 2000-2024. This provides a summary view of the typical water allocation in each country over this period. Thus bar chart visually supports our thesis by showing that the average proportion of water usage across sectors is similar between the USA and Spain.
+> These graphs provide a summary view of the typical water allocation in each country over a specific period. The graphs visually support our thesis by showing that the average proportion of water usage across sectors is similar between the USA and Spain.
 
 # Statistical Analysis
 
@@ -120,14 +129,14 @@ ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
 
 > Our parameters of interest are the true differences in the average proportions of total water use allocated to each sector between the USA and Spain over the period 2000-2024. Let:
 
--   The difference in the average proportion of water used for
-    agriculture: $\mu_{A,USA} - \mu_{A,Spain}$
--   The difference in the average proportion of water used for industry:
-    $\mu_{I,USA} - \mu_{I,Spain}$
--   The difference in the average proportion of water used for household
-    use: $\mu_{H,USA} - \mu_{H,Spain}$
+- \( X_A \sim N(\mu_{A,USA}, \sigma_{A,USA}^2) \): Agricultural water use in the USA  
+- \( Y_A \sim N(\mu_{A,Spain}, \sigma_{A,Spain}^2) \): Agricultural water use in Spain  
+- \( X_I \sim N(\mu_{I,USA}, \sigma_{I,USA}^2) \): Industrial water use in the USA  
+- \( Y_I \sim N(\mu_{I,Spain}, \sigma_{I,Spain}^2) \): Industrial water use in Spain  
+- \( X_H \sim N(\mu_{H,USA}, \sigma_{H,USA}^2) \): Household water use in the USA  
+- \( Y_H \sim N(\mu_{H,Spain}, \sigma_{H,Spain}^2) \): Household water use in Spain  
 
-> Where $\mu$ represents the true average proportion of water used for the specified sector and country over a 25 year period.
+Our parameter of interest in each case is the difference in means \( \mu_{USA} - \mu_{Spain} \) for each sector.
 
 ## Type of Inference
 
@@ -135,9 +144,9 @@ ggplot(average_use, aes(x = Sector, y = Average_Percentage, fill = Country)) +
 
 ## Assumptions
 
--   independence: we can assume that the two groups (USA and Spain) are independent of each other. The data was recorded for each country separately, so this is a fair assumption.
--   normality: it is assumed that the sample proportions for each group are approximately normally distributed based on the Central Limit Theorem.
--   constant variance: as a part of being normally distributed, we can assume that the variance of the sample proportions are approximately constant
+- Independence: Water use proportions for each year were assumed to be independent across time, as each year’s distribution reflects separate policy and environmental conditions.
+- Normality: It is assumed that the sample proportions for each group are approximately normally distributed based on the Central Limit Theorem, which approximates normality for the means of sample sizes being near or above 30.
+- Constant Variance: As a part of being normally distributed, we can assume that the variance of the sample proportions are approximately constant
 
 ## Hypothesis
 
@@ -190,30 +199,22 @@ t_test_agri <- t.test(`Agricultural Water Use (%)` ~ Country, data = water, var.
 t_test_ind <- t.test(`Industrial Water Use (%)` ~ Country, data = water, var.equal = TRUE)
 t_test_house <- t.test(`Household Water Use (%)` ~ Country, data = water, var.equal = TRUE)
 
-#print(t_test_agri)
-#print(t_test_ind)
-#print(t_test_house)
+
 ```
 
 ## Results
 
-> Agricultural Water Use:
+### Agricultural Water Use:
 
--   Test Statistic: -0.368
--   Degrees of Freedom: 48
--   P-value: 0.714
+> The statistical analysis yielded a test statistic of -0.368 with 48 degrees of freedom. The corresponding p-value was 0.714, which means there is a high probability that the observed difference in agricultural water use between the USA and Spain is due to random variation, not a real difference.
 
-> Industrial Water Use:
+### Industrial Water Use:
 
--   Test Statistic: 0.362
--   Degrees of Freedom: 48
--   P-value: 0.719
+> The statistical analysis yielded a test statistic of 0.362 with 48 degrees of freedom. The corresponding p-value was 0.719, which means there is a high probability that the observed difference in agricultural water use between the USA and Spain is due to random variation, not a real difference.
 
-> Household Water Use:
+### Household Water Use:
 
--   Test Statistic: 0.199
--   Degrees of Freedom: 48
--   P-value: 0.843
+> The statistical analysis yielded a test statistic of 0.199 with 48 degrees of freedom. The corresponding p-value was 0.843, which means there is a high probability that the observed difference in agricultural water use between the USA and Spain is due to random variation, not a real difference.
 
 ## Interpretation: Compare p-value with alpha (alpha = 0.05)
 
@@ -232,14 +233,21 @@ t_test_house <- t.test(`Household Water Use (%)` ~ Country, data = water, var.eq
 
 ## Confidence Interval
 
-> The 95% confidence intervals for the difference in mean proportions
-> (Spain - USA) are:
+### Agricultural Water Use:
 
-> -   **Agricultural Water Use:** -3.26 to 2.25
-> -   **Industrial Water Use:** -1.93 to 2.77
-> -   **Household Water Use:** -1.58 to 1.92
+> The 95% confidence interval for the difference in mean agricultural water use between Spain and the USA ranged from -3.26 to 2.25. This means the true difference in the average proportion of agricultural water use between Spain and the USA could range from 3.26 percentage points lower in Spain to 2.25 percentage points higher in Spain.
 
-> Since all three confidence intervals include zero, this further
+### Industrial Water Use:
+
+> The 95% confidence interval for the difference in mean industrial water use between Spain and the USA ranged from -1.93 to 2.77. This means the true difference in the average proportion of industrial water use between Spain and the USA could range from 1.93 percentage points lower in Spain to 2.77 percentage points higher in Spain.
+
+### Household Water Use:
+
+> The 95% confidence interval for the difference in mean household water use between Spain and the USA ranged from -1.58 to 1.92. This means the true difference in the average proportion of household water use between Spain and the USA could range from 1.58 percentage points lower in Spain to 1.92 percentage points higher in Spain.
+
+## Interpretation:
+
+> Since all three confidence intervals include zero, it means that the possibility exists that there is no difference at all between the two countries' water use across these sectors. This further
 > supports our conclusion that there is no statistically significant
 > difference in the average water allocation to these sectors between
 > the USA and Spain during the studied period. If a confidence interval
@@ -248,7 +256,7 @@ t_test_house <- t.test(`Household Water Use (%)` ~ Country, data = water, var.eq
 
 # Discussion
 
-> The p-values of our tests: 0.714, 0.719, and 0.843, respectively, are each much greater than our alpha value of 0.05. This indicates that we fail to reject the null hypotheses that the proportions of water allocated to aggriculture, household, and industrial use between the USA and Spain are the same. We can conclude from this that there is strong evidence that there is no significant difference in the allocation of water usage amongst these three categories between the USA and Spain. This means that the differences in water usage across sectors between the USA and Spain are so small that they could easily be due to random chance.
+> The p-values of our tests: 0.714, 0.719, and 0.843, respectively, are each much greater than our alpha value of 0.05. This indicates that we fail to reject the null hypotheses that the proportions of water allocated to agriculture, household, and industrial use between the USA and Spain are the same. We can conclude from this that there is strong evidence that there is no significant difference in the allocation of water usage amongst these three categories between the USA and Spain. This means that the differences in water usage across sectors between the USA and Spain are so small that they could easily be due to random chance.
 
 > For non-statiscal readers, the p-value is the probability of observing the findings in our data given that there is no difference between water allocation in the USA and Spain. Because of this, we have strong evidence that there is in fact no strong difference between the allocations in the two countries.
 
